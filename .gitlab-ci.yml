@@ -18,9 +18,8 @@ compile:
   script:
     - mvn -Dmaven.repo.local=$MAVEN_REPO clean package -Dmaven.test.skip=true
   artifacts:
-
     name: $PROJECT_NAME
-    expire_in: 1week
+    expire_in: 1 days
     paths:
       - target/*.jar
 build:
@@ -52,5 +51,5 @@ run:
     - sed -i "s#{PROJECT_NAME}#$PROJECT_NAME#g;
       s#{PROJECT_PORT}#$PROJECT_PORT#g;
       s#{PROJECT_NAMESPACE}#$PROJECT_NAMESPACE#g;
-      s#{PROJECT_IMAGE}#$IMAGE_FULL_NAME#g" > $K8S_FILE
+      s#{PROJECT_IMAGE}#$IMAGE_FULL_NAME#g" $K8S_FILE
     - kubectl apply -f $K8S_FILE
