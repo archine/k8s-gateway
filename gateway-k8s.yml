@@ -53,8 +53,22 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: eureka-host
-                  key: eureka_url
+                  key: registry_url
             - name: HOST_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {PROJECT_NAME}
+  namespace: {PROJECT_NAMESPACE}
+spec:
+  rules:
+    - host: gateway.snowbd.onesport.com.cn
+      http:
+        paths:
+          - backend:
+              serviceName: {PROJECT_NAME}
+              servicePort: {PROJECT_PORT}
