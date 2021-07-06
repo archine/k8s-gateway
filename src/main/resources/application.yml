@@ -6,12 +6,12 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: web
-          uri: lb://k8s-web
-          predicates:
+        - id: web # 自己定义的路由Id，保持唯一
+          uri: lb://k8s-web # 目标地址，lb是轮询的意思，后面接着服务名
+          predicates: #路由条件，Predicate 接受一个输入参数，返回一个布尔值结果。该接口包含多种默认方法来将 Predicate 组合成其他复杂的逻辑（比如：与，或，非）
             - Path=/web/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=1 # 跳过指定路径，路由/web/test,会转发到/test
 eureka:
   client:
     service-url:
